@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+	<h:form id="form">
+	
+	    <p:growl id="msgs" showDetail="true" />
+	
+		<h:panelGrid columns="2" cellpadding="5">
+		
+			<p:outputLabel value="Invoice Number:" />
+			<p:inputText id="invoiceNumber" value="#{invoiceController.invoiceNumber}" />
+			
+			<p:outputLabel for="begin" value="Date begin:" />
+			<p:calendar id="begin" value="#{invoiceController.dateBegin}" showOn="button" />
+			
+			<p:outputLabel for="end" value="Date end:" />
+			<p:calendar id="end" value="#{invoiceController.dateEnd}" showOn="button" />
+			
+			<p:outputLabel value="Current Value:" />
+			<p:inputText id="currentValue" value="#{invoiceController.currentValue}" />
+		</h:panelGrid>
+		
+		<p:commandButton value="Submit" update="msgs" actionListener="#{invoiceController.click}" icon="ui-icon-check" />
+		
+	</h:form>
+</h:body>
+</html>

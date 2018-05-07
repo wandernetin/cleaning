@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -20,14 +21,12 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import service.PublicHolidayService;
 
 @ManagedBean(name = "invoiceController")
 @ViewScoped
 public class InvoiceController implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public List<InvoiceReport> invoiceList;
@@ -39,32 +38,37 @@ public class InvoiceController implements Serializable {
 	private Double currentValue;
 	
 	private Integer invoiceNumber;
+		
+	@EJB
+	private PublicHolidayService pubHolService;
 
 	@SuppressWarnings("unchecked")
 	public void click() {
 		invoiceList = new ArrayList<InvoiceReport>();
 
-		Date newDate = dateBegin;
+		Date currentDate = dateBegin;
 
 		int iteration = 1;
 
-		while (newDate.before(dateEnd)) {
+		while (currentDate.before(dateEnd)) {
 			InvoiceReport invoice = new InvoiceReport();
-
-			invoice.setDate(new SimpleDateFormat("EEEE dd/MM/yyyy", Locale.ENGLISH).format(newDate));
-			invoice.setTotalDate(currentValue * iteration);
-			invoiceList.add(invoice);
+			
+			if(!pubHolService.isThisDateAHoliday(currentDate)) {
+				invoice.setDate(new SimpleDateFormat("EEEE dd/MM/yyyy", Locale.ENGLISH).format(currentDate));
+				invoice.setTotalDate(currentValue * iteration);
+				invoiceList.add(invoice);
+				iteration++;
+			}
 
 			Calendar c = Calendar.getInstance();
-			c.setTime(newDate);
+			c.setTime(currentDate);
 			if (c.get(Calendar.DAY_OF_WEEK) == 6) {
 				c.add(Calendar.DATE, 3);
 			} else {
 				c.add(Calendar.DATE, 1);
 			}
 
-			newDate = c.getTime();
-			iteration++;
+			currentDate = c.getTime();
 
 		}
 
@@ -72,7 +76,7 @@ public class InvoiceController implements Serializable {
 		Map parametersMap = new HashMap();
 		parametersMap.put("date", new Date());
 		parametersMap.put("invoiceNumber", getInvoiceNumber());
-		parametersMap.put("total", 200.00);
+		parametersMap.put("total", invoiceList.size() * currentValue);
 
 		try {
 			String jrxmlFileName = "C:/AmbienteJEE/Relatorios/invoice1.jrxml";
@@ -129,7 +133,4 @@ public class InvoiceController implements Serializable {
 	public void setInvoiceNumber(Integer invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
 	}
-	
-	
-
 }

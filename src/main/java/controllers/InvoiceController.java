@@ -1,6 +1,9 @@
 package controllers;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,6 +16,9 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import entities.InvoiceReport;
 import net.sf.jasperreports.engine.JRException;
@@ -20,7 +26,10 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import service.PublicHolidayService;
 
 @ManagedBean(name = "invoiceController")
@@ -36,9 +45,9 @@ public class InvoiceController implements Serializable {
 	private Date dateEnd;
 
 	private Double currentValue;
-	
+
 	private Integer invoiceNumber;
-		
+
 	@EJB
 	private PublicHolidayService pubHolService;
 
@@ -52,8 +61,8 @@ public class InvoiceController implements Serializable {
 
 		while (currentDate.before(dateEnd)) {
 			InvoiceReport invoice = new InvoiceReport();
-			
-			if(!pubHolService.isThisDateAHoliday(currentDate)) {
+
+			if (!pubHolService.isThisDateAHoliday(currentDate)) {
 				invoice.setDate(new SimpleDateFormat("EEEE dd/MM/yyyy", Locale.ENGLISH).format(currentDate));
 				invoice.setTotalDate(currentValue * iteration);
 				invoiceList.add(invoice);
@@ -79,15 +88,36 @@ public class InvoiceController implements Serializable {
 		parametersMap.put("total", invoiceList.size() * currentValue);
 
 		try {
-			String jrxmlFileName = "C:/AmbienteJEE/Relatorios/invoice1.jrxml";
-			String jasperFileName = "C:/AmbienteJEE/Relatorios/invoice1.jasper";
+			//String jrxmlFileName = "report/invoice1.jrxml";
+			//String jasperFileName = "report/invoice1.jasper";
 
-			JasperCompileManager.compileReportToFile(jrxmlFileName, jasperFileName);
+			URL arquivo = getClass().getResource("/report/invoice1.jasper");
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(arquivo);
 
-			JasperPrint jprint = (JasperPrint) JasperFillManager.fillReport(jasperFileName, parametersMap,
+		    JasperPrint jasperPrint = JasperFillManager.fillReport( jasperReport, parametersMap,
 					new JRBeanCollectionDataSource(invoiceList));
+		    
+		    
+		    HttpServletResponse httpServletResponse=(HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();  
+		    httpServletResponse.addHeader("Content-disposition", "attachment; filename=invoice.pdf");  
 
-			JasperExportManager.exportReportToPdfFile(jprint, "C:/Users/wande/Downloads/Invoice.pdf");
+		    FacesContext.getCurrentInstance().responseComplete();
+
+
+		    ServletOutputStream servletOutputStream;
+			try {
+				servletOutputStream = httpServletResponse.getOutputStream();
+				JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);  
+			    System.out.println("All done the report is done");
+			    servletOutputStream.flush();
+			    servletOutputStream.close(); 
+			    FacesContext.getCurrentInstance().responseComplete();  
+			    
+			} catch (IOException e) {
+				e.printStackTrace();
+			}  
+		    
+		    
 
 		} catch (JRException e) {
 			e.printStackTrace();

@@ -29,7 +29,8 @@
 			
 		</h:panelGrid>
 		
-		<p:commandButton value="Submit" update="msgs" actionListener="#{invoiceController.click}" icon="ui-icon-check" />
+		<p:commandButton value="Submit" ajax="false" update="msgs" 
+			actionListener="#{invoiceController.click}" icon="ui-icon-check" />
 		
 	</h:form>
 </h:body>

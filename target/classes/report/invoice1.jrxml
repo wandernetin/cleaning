@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39dc1094-bf79-426e-a97d-946d7411d00e">
+	<property name="ireport.zoom" value="3.4522712143931042"/>
+	<property name="ireport.x" value="162"/>
+	<property name="ireport.y" value="133"/>
+	<parameter name="invoiceNumber" class="java.lang.Integer"/>
+	<parameter name="date" class="java.util.Date"/>
+	<parameter name="total" class="java.lang.Double"/>
+	<field name="totalDate" class="java.lang.Double"/>
+	<field name="date" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="10" width="138" height="20" uuid="2ece3860-6516-4295-985c-5de8f2e15bdc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLEANING SERVICES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="35" width="224" height="20" uuid="b4d98c99-68e4-42a1-afca-1c440a5c629a"/>
+				<text><![CDATA[NAME: CAMILA CAMARA PEREIRA DA PAZ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="61" width="224" height="20" uuid="321c78c5-168d-41b9-99a8-eac68ec3a6d5"/>
+				<text><![CDATA[ABN: 56258233860]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="10" width="143" height="20" uuid="93bd3bb3-0554-4c7c-b543-eaf260024019"/>
+				<text><![CDATA[COMMONWEALTH BANK ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="35" width="143" height="20" uuid="dfa35cbd-522f-4a74-92fa-82b4c691ddae"/>
+				<text><![CDATA[ACCOUNT Nº: 1454 6154 ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="61" width="143" height="20" uuid="7e848ac7-ee89-4503-8ff5-69ad2e0dba89"/>
+				<text><![CDATA[BSB Nº: 064000
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="92" width="80" height="20" uuid="3aa4ac15-8b39-47bd-9a32-9c9109e5c0bf"/>
+				<text><![CDATA[TAX INVOICE Nº: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="92" width="31" height="20" uuid="a0fb40b6-0709-45e0-b2c8-0759f9fe622b"/>
+				<text><![CDATA[DATE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="95" y="92" width="89" height="20" uuid="ec94591f-109e-4038-8eb9-6bf0fd2f8cec"/>
+				<textFieldExpression><![CDATA[$P{invoiceNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="92" width="130" height="20" uuid="89b54cac-4a45-46f6-bf40-7b343c62d583"/>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30">
+			<textField>
+				<reportElement x="0" y="0" width="184" height="30" uuid="950c4b80-65df-4a49-b68b-5449d1f1e42e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Description"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="0" width="66" height="30" uuid="a0ef4595-cc42-4a3b-8b1e-c0975ea51ce5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["QTY"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="130" height="30" uuid="0aa0d892-9b89-4e46-bb5f-3367d423645f"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Unit Price (AU$)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="175" height="30" uuid="0096caf3-3ee8-4567-8a36-0df22cb0e66b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Total (AU$)"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="184" height="31" uuid="b29e8376-8a6d-4aac-abe9-4c9eb226a15f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="184" y="0" width="66" height="31" uuid="9fe3fb4b-c89e-4bec-8d95-050e140a04d0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="130" height="31" uuid="390ab684-0144-4b14-b731-75d572af879e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[20,00]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="380" y="0" width="175" height="31" uuid="644528e1-52b3-4c16-94e2-389f152fd6a3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{totalDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="38">
+			<staticText>
+				<reportElement x="0" y="0" width="151" height="38" uuid="ec1a9772-64f2-471f-8ff2-73a1a29ecfb0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="339" y="0" width="216" height="38" uuid="8492c96f-7a0c-4972-87fe-185947c145dc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AU$" + $P{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
